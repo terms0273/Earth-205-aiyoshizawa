@@ -1,22 +1,20 @@
+package models;
+
+
+import views.*;
+import Models.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.*;
-
 import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.i18n.Lang;
-import play.libs.F;
-import play.libs.F.*;
 
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
+import play.data.Form;
+import static play.data.Form.form;
+import play.test.FakeApplication;
 
 
 /**
@@ -25,20 +23,66 @@ import static org.fest.assertions.Assertions.*;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class ApplicationTest {
-
+public class UserTest {
+    /**
+     * 正常系のid入力チェック
+     */
     @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a).isEqualTo(2);
+    public void testIdCheck(){
+        List<String> ids = new ArrayList<>();
+        Map<String,String> map = new HashMap<>();
+        ids.add("1235");
+        ids.add("123567890");
+        for(String id:ids){
+            map.put("Id",id);
+            Form<User> form = form(User.class).bind(map);
+            assertThat(form.hasErrors()).isFalse();
+        }
     }
-
+    /**
+     * 異常系のid入力チェック
+     */
     @Test
-    public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
-        assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("Your new application is ready.");
+    public void testIdCheckErr(){
+        List<String> ids = new ArrayList<>();
+        Map<String,String> map = new HashMap<>();
+        ids.add("1234");
+        ids.add("1235678901");
+        for(String id:ids){
+            map.put("Id",id);
+            Form<User> form = form(User.class).bind(map);
+            assertThat(form.hasErrors()).isTrue();
+        }
     }
-
-
+    
+    /**
+     * 正常系のpassword入力チェック
+     */
+    @Test
+    public void testPwCheck(){
+        List<String> pws = new ArrayList<>();
+        Map<String,String> map = new HashMap<>();
+        pws.add("1235");
+        pws.add("1235678901234567890");
+        for(String id:pws){
+            map.put("Id",id);
+            Form<User> form = form(User.class).bind(map);
+            assertThat(form.hasErrors()).isFalse();
+        }
+    }
+    /**
+     * 異常系のpassword入力チェック
+     */
+    @Test
+    public void testPwCheckErr(){
+        List<String> pws = new ArrayList<>();
+        Map<String,String> map = new HashMap<>();
+        pws.add("1234");
+        pws.add("12356789012345678901");
+        for(String id:pws){
+            map.put("Id",id);
+            Form<User> form = form(User.class).bind(map);
+            assertThat(form.hasErrors()).isTrue();
+        }
+    }
 }
