@@ -1,8 +1,8 @@
 package controllers;
 
 
-import .*;
 import Models.User;
+import apps.FakeApp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ import play.test.FakeApplication;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class ApplicationTest {
+public class ApplicationTest extends FakeApp{
     
     /**
      * ログイン成功時,メイン画面へ遷移する
@@ -31,17 +31,16 @@ public class ApplicationTest {
      */
     @Test
     public void testLoginSuccessPage() {
-        FakeApplication app = fakeApplication();
         
         Map<String,String> map = new HashMap<>();
-        map.put("Id","admin");
-        map.put("Password","admin");
+        map.put("id","205");
+        map.put("password","password");
         
-        Form<User> form = form(User.class).bind(map);
-        Result result = route(fakeRequest(POST,"/doLogin").withBody(form));
+        Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
         
-        assertThat(contentType(result)).isEqualTo("text/html");
-        assertThat(contentAsString(result)).contains("ログアウト");
+        assertThat(status(result)).isEqualTo(SEE_OTHER);
+        assertThat(redirectLocation(result)).isEqualTo("/doLogin");
+        
         assertThat(session(result)).isNotNull();
     }
     
