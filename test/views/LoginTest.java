@@ -26,6 +26,7 @@ public class LoginTest {
     
     /**
      * Login.htmlが返ってくるかをチェックする
+     * ログイン画面はID、PWの入力項目がある
      */
     @Test
     public void testLogin() {
@@ -33,49 +34,7 @@ public class LoginTest {
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Earth");
         assertThat(contentAsString(html)).contains("ログイン");
-    }
-    /**
-     * ログイン画面はID、PWの入力項目がある
-     */
-    @Test
-    public void testLoginIdPw() {
-        
-    
-        Content html = views.html.doLogin.render(new Form(User.class));
-        assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("ID");
         assertThat(contentAsString(html)).contains("PW");
-    }
-
-    
-    /**
-     * 正常系のid入力チェック
-     */
-    @Test
-    public void testIdCheck(){
-        List<String> ids = new ArrayList<>();
-        Map<String,String> map = new HashMap<>();
-        ids.add("1235");
-        ids.add("123567890");
-        for(String id:ids){
-            map.put("Id",id);
-            Form<User> form = form(User.class).bind(map);
-            assertThat(form.hasErrors()).isFalse();
-        }
-    }
-    /**
-     * 正常系のid入力チェック
-     */
-    @Test
-    public void testIdCheckErr(){
-        List<String> ids = new ArrayList<>();
-        Map<String,String> map = new HashMap<>();
-        ids.add("1234");
-        ids.add("1235678901");
-        for(String id:ids){
-            map.put("Id",id);
-            Form<User> form = form(User.class).bind(map);
-            assertThat(form.hasErrors()).isTrue();
-        }
     }
 }
