@@ -1,20 +1,18 @@
 package models;
 
 
-import views.*;
 import Models.User;
+import apps.FakeApp;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlRow;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.*;
-import play.mvc.*;
-
-import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 import play.data.Form;
 import static play.data.Form.form;
-import play.test.FakeApplication;
 
 
 /**
@@ -23,7 +21,7 @@ import play.test.FakeApplication;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class UserTest {
+public class UserTest extends FakeApp{
     /**
      * 正常系のid入力チェック
      */
@@ -54,7 +52,6 @@ public class UserTest {
             assertThat(form.hasErrors()).isTrue();
         }
     }
-    
     /**
      * 正常系のpassword入力チェック
      */
@@ -84,5 +81,25 @@ public class UserTest {
             Form<User> form = form(User.class).bind(map);
             assertThat(form.hasErrors()).isTrue();
         }
+    }
+    /**
+     * DBに値を入れ,DBから取得し同じかどうかチェックする
+     */
+    @Test
+    public void testUserDbCheck(){
+        
+        String sql = "select id,nick_name,password from User where id=:id";
+        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("id","205").findList();
+        assertThat(sqlRows.get(0).getString("password")).isEqualTo(user.password);
+        assertThat(sqlRows.get(0).getString("nickname")).isEqualTo(user.nickname);
+    }
+    /**
+     * dbに入れた値がModelにも入っているかチェックする
+     */
+    @Test
+    public void testUserCheck(){
+        User getUser = User.find.byId("205");
+        assertThat(getUser.password).isEqualTo(user.password);
+        assertThat(getUser.nickname).isEqualTo(user.nickname);
     }
 }
