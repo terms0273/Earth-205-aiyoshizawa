@@ -14,6 +14,7 @@ import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 import play.data.Form;
 import static play.data.Form.form;
+import static play.mvc.Http.Status.SEE_OTHER;
 import play.test.FakeApplication;
 
 
@@ -30,7 +31,7 @@ public class ApplicationTest extends FakeApp{
      * ログイン成功時,セッションに値が入っている
      */
     @Test
-    public void testLoginSuccessPage() {
+    public void testLoginSuccess() {
         
         Map<String,String> map = new HashMap<>();
         map.put("id","205");
@@ -43,5 +44,29 @@ public class ApplicationTest extends FakeApp{
         
         assertThat(session(result)).isNotNull();
     }
-    
+        /**
+     * ログイン失敗時,ログイン画面へ遷移する
+     * ログイン失敗時,IDもしくはPasswordが間違っていますと表示される
+     * ログイン失敗時,フォームの値がクリアされている
+     * ログイン失敗時,セッションに値が入っていない
+     */
+    @Test
+    public void testLoginError() {
+        
+        Map<String,String> map = new HashMap<>();
+        map.put("id","205");
+        map.put("password","aaaa");
+        
+        Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
+        Form form = new Form(User.class).bindFromRequest();
+        User getUser = form.get();
+        assertThat(getUser.id).isEmpty();
+        assertThat(getUser.password).isEmpty();
+        
+        assertThat(status(result)).isEqualTo(BAD_REQUEST);
+        assertThat(contentAsString(result)).isEqualTo("/doLogin");
+        assertThat(contentAsString(result)).contains("IDもしくはPasswordが間違っています");
+        assertThat(session(result)).isNull();
+        assertThat(form).isNull();
+    }
 }
