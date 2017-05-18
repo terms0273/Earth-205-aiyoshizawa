@@ -58,14 +58,14 @@ public class LoginTest extends FakeApp{
         map.put("password","aaaa");
         
         Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
-        Form form = new Form(User.class).bindFromRequest();
+        Form<User> form = new Form(User.class).bindFromRequest();
         User getUser = form.get();
         assertThat(getUser.getUserId()).isEmpty();
         assertThat(getUser.getPassword()).isEmpty();
         
         assertThat(status(result)).isEqualTo(BAD_REQUEST);
         assertThat(redirectLocation(result)).isEqualTo("/doLogin");
-        assertThat(contentAsString(result)).contains("IDもしくはPasswordが間違っています");
+        assertThat(contentAsString(result)).contains("IDかPasswordまたはその両方が間違っています");
         assertThat(session(result)).isNull();
     }
 }
