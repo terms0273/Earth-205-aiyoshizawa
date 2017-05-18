@@ -91,7 +91,7 @@ public class UserTest extends FakeApp{
         
         String sql = "select id,user_id,nick_name,password from User where user_id=:user_id";
         List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("user_id","205").findList();
-        assertThat(sqlRows.get(0).getLong("id")).isEqualTo(user.id);
+        assertThat(sqlRows.get(0).getLong("id")).isEqualTo(user.getId());
         assertThat(sqlRows.get(0).getString("password")).isEqualTo(user.getPassword());
         assertThat(sqlRows.get(0).getString("nick_name")).isEqualTo(user.getNickName());
     }
@@ -101,7 +101,7 @@ public class UserTest extends FakeApp{
     @Test
     public void testUserCheck(){
         User getUser = User.find.where().eq("user_id", "205").findUnique();
-        assertThat(getUser.id).isEqualTo(user.id);
+        assertThat(getUser.getId()).isEqualTo(user.getId());
         assertThat(getUser.getPassword()).isEqualTo(user.getPassword());
         assertThat(getUser.getNickName()).isEqualTo(user.getNickName());
     }
