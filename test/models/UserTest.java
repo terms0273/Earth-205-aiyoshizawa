@@ -32,7 +32,7 @@ public class UserTest extends FakeApp{
         ids.add("1");
         ids.add("1235678901234567890");
         for(String id:ids){
-            map.put("Id",id);
+            map.put("user_id",id);
             Form<User> form = form(User.class).bind(map);
             assertThat(form.hasErrors()).isFalse();
         }
@@ -47,7 +47,7 @@ public class UserTest extends FakeApp{
         ids.add("");
         ids.add("123456789012345678901");
         for(String id:ids){
-            map.put("Id",id);
+            map.put("user_id",id);
             Form<User> form = form(User.class).bind(map);
             assertThat(form.hasErrors()).isTrue();
         }
@@ -89,8 +89,9 @@ public class UserTest extends FakeApp{
     @Test
     public void testUserDbCheck(){
         
-        String sql = "select id,nick_name,password from User where id=:id";
-        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("id","205").findList();
+        String sql = "select id,user_id,nick_name,password from User where user_id=:user_id";
+        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("user_id","205").findList();
+        assertThat(sqlRows.get(0).getLong("id")).isEqualTo(user.id);
         assertThat(sqlRows.get(0).getString("password")).isEqualTo(user.password);
         assertThat(sqlRows.get(0).getString("nick_name")).isEqualTo(user.nickName);
     }
@@ -99,7 +100,8 @@ public class UserTest extends FakeApp{
      */
     @Test
     public void testUserCheck(){
-        User getUser = User.find.byId("205");
+        User getUser = User.find.where().eq("user_id", "205").findUnique();
+        assertThat(getUser.id).isEqualTo(user.id);
         assertThat(getUser.password).isEqualTo(user.password);
         assertThat(getUser.nickName).isEqualTo(user.nickName);
     }
