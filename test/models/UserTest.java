@@ -62,8 +62,8 @@ public class UserTest extends FakeApp{
         Map<String,String> map = new HashMap<>();
         pws.add("12345");
         pws.add("1235678901234567890");
-        for(String id:pws){
-            map.put("Id",id);
+        for(String pw:pws){
+            map.put("password",pw);
             Form<User> form = form(User.class).bind(map);
             assertThat(form.hasErrors()).isFalse();
         }
@@ -77,8 +77,8 @@ public class UserTest extends FakeApp{
         Map<String,String> map = new HashMap<>();
         pws.add("1234");
         pws.add("12356789012345678901");
-        for(String id:pws){
-            map.put("Id",id);
+        for(String pw:pws){
+            map.put("password",pw);
             Form<User> form = form(User.class).bind(map);
             assertThat(form.hasErrors()).isTrue();
         }
