@@ -1,7 +1,6 @@
 package models;
 
 
-import Models.User;
 import apps.FakeApp;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.SqlRow;

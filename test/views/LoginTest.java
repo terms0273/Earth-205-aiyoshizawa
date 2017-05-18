@@ -1,7 +1,7 @@
 package views;
 
 
-import Models.User;
+import models.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

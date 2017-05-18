@@ -1,7 +1,7 @@
 package controllers;
 
 
-import Models.User;
+import models.User;
 import apps.FakeApp;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -5,7 +5,7 @@
  */
 package apps;
 
-import Models.User;
+import models.User;
 import com.avaje.ebean.Ebean;
 import java.io.IOException;
 import net.sf.ehcache.Cache;
