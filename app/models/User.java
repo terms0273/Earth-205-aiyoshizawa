@@ -22,14 +22,35 @@ public class User {
     
     @Required
     @Pattern(message = "5~10の英数字で入力してください。" ,value = "[a-zA-Z0-9]{5,10}")
-    public String userId;
+    private String userId;
     
     @Required
     @Pattern(message = "5~20英数字で入力してください。" ,value = "[a-zA-Z0-9]{5,20}")
-    public String password;
+    private String password;
     
     @Required
-    public String nickName;
+    private String nickName;
     
     public static Finder<Long, User> find = new Finder<>(Long.class,User.class);
+
+    /**
+     * @return the userId
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @return the nickName
+     */
+    public String getNickName() {
+        return nickName;
+    }
 }

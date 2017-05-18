@@ -2,10 +2,10 @@
 @import helper._
 
 @main("Login") {
-    @form(action = routes.Application.doLogin){
+    @form(action = routes.Login.doLogin){
         @inputText(
-            field = loginForm("id"),
-            '_label -> "ID"
+            field = loginForm("userId"),
+            '_label -> "UserID"
         )
         @inputPassword(
             field = loginForm("password"),

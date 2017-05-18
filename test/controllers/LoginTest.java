@@ -60,8 +60,8 @@ public class LoginTest extends FakeApp{
         Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
         Form form = new Form(User.class).bindFromRequest();
         User getUser = form.get();
-        assertThat(getUser.id).isEmpty();
-        assertThat(getUser.password).isEmpty();
+        assertThat(getUser.getUserId()).isEmpty();
+        assertThat(getUser.getPassword()).isEmpty();
         
         assertThat(status(result)).isEqualTo(BAD_REQUEST);
         assertThat(redirectLocation(result)).isEqualTo("/doLogin");

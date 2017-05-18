@@ -3,8 +3,8 @@
 # ~~~~
 
 # Home page
-GET     /login                      controllers.Application.login()
-POST    /doLogin                    controllers.Application.doLogin()
+GET     /login                      controllers.Login.login()
+POST    /doLogin                    controllers.Login.doLogin()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
