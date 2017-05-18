@@ -18,16 +18,18 @@ import play.db.ebean.Model.Finder;
 @Entity
 public class User {
     @Id
+    public String id;
+    
     @Required
     @Pattern(message = "5~10の英数字で入力してください。" ,value = "[a-zA-Z0-9]{5,10}")
-    public String id;
+    public String userId;
     
     @Required
     @Pattern(message = "5~20英数字で入力してください。" ,value = "[a-zA-Z0-9]{5,20}")
     public String password;
     
     @Required
-    public String nickname;
+    public String nickName;
     
     public static Finder<String, User> find = new Finder<>(String.class,User.class);
 }
