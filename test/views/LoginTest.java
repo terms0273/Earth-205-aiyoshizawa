@@ -30,11 +30,11 @@ public class LoginTest {
      */
     @Test
     public void testLogin() {
-        Content html = views.html.doLogin.render(new Form(User.class));
+        Content html = views.html.login.render(new Form(User.class));
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Earth");
         assertThat(contentAsString(html)).contains("ログイン");
-        assertThat(contentAsString(html)).contains("ID");
-        assertThat(contentAsString(html)).contains("PW");
+        assertThat(contentAsString(html)).contains("UserID");
+        assertThat(contentAsString(html)).contains("Password");
     }
 }
