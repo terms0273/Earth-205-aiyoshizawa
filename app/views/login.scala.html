@@ -1,7 +1,16 @@
-@(registerForm: Form[models.User])
+@(loginForm: Form[models.User])
+@import helper._
 
-@main("Welcome to Play") {
-
-    <h1>Earth</h1>
-
+@main("Login") {
+    @form(action = routes.Application.doLogin){
+        @inputText(
+            field = loginForm("id"),
+            '_label -> "ID"
+        )
+        @inputPassword(
+            field = loginForm("password"),
+            '_label -> "Password"
+        )
+        <input type="submit" value="ログイン">
+    }
 }
