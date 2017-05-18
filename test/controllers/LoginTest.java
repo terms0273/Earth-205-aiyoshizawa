@@ -34,7 +34,7 @@ public class LoginTest extends FakeApp{
     public void testLoginSuccess() {
         
         Map<String,String> map = new HashMap<>();
-        map.put("id","205");
+        map.put("userId","205");
         map.put("password","password");
         
         Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
@@ -54,7 +54,7 @@ public class LoginTest extends FakeApp{
     public void testLoginError() {
         
         Map<String,String> map = new HashMap<>();
-        map.put("id","205");
+        map.put("userId","205");
         map.put("password","aaaa");
         
         Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
