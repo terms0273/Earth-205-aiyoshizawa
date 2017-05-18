@@ -90,7 +90,7 @@ public class UserTest extends FakeApp{
         String sql = "select id,nick_name,password from User where id=:id";
         List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("id","205").findList();
         assertThat(sqlRows.get(0).getString("password")).isEqualTo(user.password);
-        assertThat(sqlRows.get(0).getString("nickname")).isEqualTo(user.nickname);
+        assertThat(sqlRows.get(0).getString("nick_name")).isEqualTo(user.nickName);
     }
     /**
      * dbに入れた値がModelにも入っているかチェックする
@@ -99,6 +99,6 @@ public class UserTest extends FakeApp{
     public void testUserCheck(){
         User getUser = User.find.byId("205");
         assertThat(getUser.password).isEqualTo(user.password);
-        assertThat(getUser.nickname).isEqualTo(user.nickname);
+        assertThat(getUser.nickName).isEqualTo(user.nickName);
     }
 }
