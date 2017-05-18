@@ -18,7 +18,7 @@ import play.db.ebean.Model.Finder;
 @Entity
 public class User {
     @Id
-    public String id;
+    public Long id;
     
     @Required
     @Pattern(message = "5~10の英数字で入力してください。" ,value = "[a-zA-Z0-9]{5,10}")
@@ -31,5 +31,5 @@ public class User {
     @Required
     public String nickName;
     
-    public static Finder<String, User> find = new Finder<>(String.class,User.class);
+    public static Finder<Long, User> find = new Finder<>(Long.class,User.class);
 }
