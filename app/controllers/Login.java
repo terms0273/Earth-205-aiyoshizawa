@@ -6,7 +6,7 @@ import play.mvc.*;
 
 import views.html.*;
 
-public class Application extends Controller {
+public class Login extends Controller {
 
     public static Result login() {
         Form form = new Form(User.class);

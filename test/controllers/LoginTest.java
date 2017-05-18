@@ -24,7 +24,7 @@ import play.test.FakeApplication;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class ApplicationTest extends FakeApp{
+public class LoginTest extends FakeApp{
     
     /**
      * ログイン成功時,メイン画面へ遷移する
