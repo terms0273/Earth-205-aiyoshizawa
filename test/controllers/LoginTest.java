@@ -64,9 +64,8 @@ public class LoginTest extends FakeApp{
         assertThat(getUser.password).isEmpty();
         
         assertThat(status(result)).isEqualTo(BAD_REQUEST);
-        assertThat(contentAsString(result)).isEqualTo("/doLogin");
+        assertThat(redirectLocation(result)).isEqualTo("/doLogin");
         assertThat(contentAsString(result)).contains("IDもしくはPasswordが間違っています");
         assertThat(session(result)).isNull();
-        assertThat(form).isNull();
     }
 }
