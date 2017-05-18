@@ -31,6 +31,7 @@ public class User {
     @Required
     private String nickName;
     
+    private boolean deleteFlag;
     public static Finder<Long, User> find = new Finder<>(Long.class,User.class);
 
     /**
