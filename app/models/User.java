@@ -7,8 +7,10 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import org.hibernate.validator.constraints.NotBlank;
 
 import play.data.validation.Constraints.*;
+import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
 /**
@@ -16,8 +18,8 @@ import play.db.ebean.Model.Finder;
  * @author y-aiyoshizawa
  */
 @Entity
-public class User {
-    User(String userId,String password,String nickName){
+public class User extends Model{
+    public User(String userId,String password,String nickName){
         setUserId(userId);
         setPassword(password);
         setNickName(nickName);
@@ -26,18 +28,20 @@ public class User {
     @Id
     private Long id;
     
-    @Required
-    @Pattern(message = "5~10の英数字で入力してください。" ,value = "[a-zA-Z0-9]{5,10}")
+    @NotBlank
+    @Pattern(message = "1~20の英数字で入力してください。" ,value = "^[a-zA-Z0-9]{1,20}$")
     private String userId;
     
-    @Required
-    @Pattern(message = "5~20英数字で入力してください。" ,value = "[a-zA-Z0-9]{5,20}")
+
+    @NotBlank
+    @Pattern(message = "5~20英数字で入力してください。" ,value = "^[a-zA-Z0-9]{5,20}$")
     private String password;
     
-    @Required
+    @NotBlank
     private String nickName;
     
     private boolean deleteFlag;
+    
     public static Finder<Long, User> find = new Finder<>(Long.class,User.class);
     
     /**
@@ -58,7 +62,7 @@ public class User {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
+    
     /**
      * @return the password
      */
@@ -69,6 +73,7 @@ public class User {
      * @param password the password to set
      */
     public void setPassword(String password) {
+        //TODO: ここでハッシュ値に変換する
         this.password = password;
     }
     
