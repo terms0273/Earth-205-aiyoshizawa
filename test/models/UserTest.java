@@ -22,14 +22,15 @@ import static play.data.Form.form;
 */
 public class UserTest extends FakeApp{
     /**
-     * 正常系のid入力チェック
+     * 正常系のuserId入力チェック
+     * 入力規則:1~20の英数字
      */
     @Test
     public void testIdCheck(){
         List<String> ids = new ArrayList<>();
         Map<String,String> map = new HashMap<>();
-        ids.add("1235");
-        ids.add("123567890");
+        ids.add("1");
+        ids.add("1235678901234567890");
         for(String id:ids){
             map.put("Id",id);
             Form<User> form = form(User.class).bind(map);
@@ -37,14 +38,14 @@ public class UserTest extends FakeApp{
         }
     }
     /**
-     * 異常系のid入力チェック
+     * 異常系のuserId入力チェック
      */
     @Test
     public void testIdCheckErr(){
         List<String> ids = new ArrayList<>();
         Map<String,String> map = new HashMap<>();
-        ids.add("1234");
-        ids.add("1235678901");
+        ids.add("");
+        ids.add("123456789012345678901");
         for(String id:ids){
             map.put("Id",id);
             Form<User> form = form(User.class).bind(map);
@@ -53,12 +54,13 @@ public class UserTest extends FakeApp{
     }
     /**
      * 正常系のpassword入力チェック
+     * 入力規則:5~20の英数字
      */
     @Test
     public void testPwCheck(){
         List<String> pws = new ArrayList<>();
         Map<String,String> map = new HashMap<>();
-        pws.add("1235");
+        pws.add("12345");
         pws.add("1235678901234567890");
         for(String id:pws){
             map.put("Id",id);
