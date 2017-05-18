@@ -17,8 +17,14 @@ import play.db.ebean.Model.Finder;
  */
 @Entity
 public class User {
+    User(String userId,String password,String nickName){
+        setUserId(userId);
+        setPassword(password);
+        setNickName(nickName);
+        setDeleteFlag(false);
+    }
     @Id
-    public Long id;
+    private Long id;
     
     @Required
     @Pattern(message = "5~10の英数字で入力してください。" ,value = "[a-zA-Z0-9]{5,10}")
@@ -33,12 +39,24 @@ public class User {
     
     private boolean deleteFlag;
     public static Finder<Long, User> find = new Finder<>(Long.class,User.class);
-
+    
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
     /**
      * @return the userId
      */
     public String getUserId() {
         return userId;
+    }
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     /**
@@ -47,11 +65,37 @@ public class User {
     public String getPassword() {
         return password;
     }
-
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     /**
      * @return the nickName
      */
     public String getNickName() {
         return nickName;
+    }
+    /**
+     * @param nickName the nickName to set
+     */
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+    
+    /**
+     * @return the deleteFlag
+     */
+    public boolean isDeleteFlag() {
+        return deleteFlag;
+    }
+
+    /**
+     * @param deleteFlag the deleteFlag to set
+     */
+    public void setDeleteFlag(boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 }
