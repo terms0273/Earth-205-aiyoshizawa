@@ -35,13 +35,13 @@ public class User extends Model{
     
 
     @NotBlank
-    @Pattern(message = "5~20英数字で入力してください。" ,value = "^[a-zA-Z0-9]{5,20}$")
+    @Pattern(message = "5~20の英数字で入力してください。" ,value = "^[a-zA-Z0-9]{5,20}$")
     private String password;
     
     @NotBlank
     private String nickName;
     
-    private boolean deleteFlag;
+    private boolean deleteFlag = false;
     
     public static Finder<Long, User> find = new Finder<>(Long.class,User.class);
     
@@ -50,6 +50,13 @@ public class User extends Model{
      */
     public Long getId() {
         return id;
+    }
+    /**
+     * 
+     * @param the id 
+     */
+    public void setId(long id) {
+        this.id = id;
     }
     /**
      * @return the userId
