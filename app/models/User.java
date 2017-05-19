@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import play.data.validation.Constraints.*;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
+import util.BCrypt;
 
 /**
  *
@@ -73,7 +74,6 @@ public class User extends Model{
      * @param password the password to set
      */
     public void setPassword(String password) {
-        //TODO: ここでハッシュ値に変換する
         this.password = password;
     }
     
@@ -102,5 +102,14 @@ public class User extends Model{
      */
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+    
+    /**
+     * saveするときにパスワードをハッシュ化する
+     */
+    @Override
+    public void save() {
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        super.save();
     }
 }
