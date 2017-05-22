@@ -6,7 +6,7 @@ import play.mvc.*;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
 import static play.mvc.Results.redirect;
-import util.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
 
 import views.html.*;
 
@@ -61,7 +61,7 @@ public class UserController extends Controller{
         Form<User> form = new Form(User.class).bindFromRequest();
         if(!form.hasErrors()){
             User formUser = form.get();
-            formUser.save();
+            formUser.passwordHashSave();
              return redirect(routes.UserController.login());
         }else{
             return badRequest(register.render(form));

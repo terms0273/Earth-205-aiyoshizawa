@@ -1,21 +1,18 @@
-@(loginForm: Form[models.User])
+@(loginForm: Form[models.User],userList: List[models.User])
 @import helper._
 
 @main("Register") {
-    <h2>新規登録</h2>
-    @form(action = routes.UserController.create){
-        @inputText(
-            field = loginForm("userId"),
-            '_label -> "UserID"
-        )
-        @inputText(
-            field = loginForm("nickName"),
-            '_label -> "NickName"
-        )
-        @inputPassword(
-            field = loginForm("password"),
-            '_label -> "Password"
-        )
-        <input type="submit" value="登録">
-    }
+    <h2>ユーザー削除</h2>
+    <table>
+        <tr>
+            <th>UserID</th>
+            <th>NickName</th>
+        </tr>
+        @for(user <- userList){
+        <tr>
+            <td>user.userId</td>
+            <td>user.nickName</td>
+        </tr>
+        }
+    </table>
 }
