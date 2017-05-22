@@ -114,8 +114,7 @@ public class User extends Model{
     /**
      * saveするときにパスワードをハッシュ化する
      */
-    @Override
-    public void save() {
+    public void passwordHashSave(){
         password = BCrypt.hashpw(password, BCrypt.gensalt());
         super.save();
     }
