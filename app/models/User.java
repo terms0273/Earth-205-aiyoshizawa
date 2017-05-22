@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import play.data.validation.Constraints.*;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
-import util.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -38,7 +38,6 @@ public class User extends Model{
     @Pattern(message = "5~20の英数字で入力してください。" ,value = "^[a-zA-Z0-9]{5,20}$")
     private String password;
     
-    @NotBlank
     private String nickName;
     
     private boolean deleteFlag = false;
