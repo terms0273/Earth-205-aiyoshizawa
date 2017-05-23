@@ -81,7 +81,7 @@ public class UserModelService {
         return user;
     }
     /**
-     * idで引っ張ってきたデータを元にditUserで上書きする
+     * パスワードの変更の更新
      * @param id
      * @param editUser
      * @return エラー:null,更新成功:User
@@ -91,14 +91,17 @@ public class UserModelService {
         if(user == null){
             return null;
         }
-        //ユーザーIDに変更があるAND変更後のUserIDが既に存在する
-        if(!user.getUserId().equals(editUser.userId) && User.find.where().eq("user_id",editUser.userId).findRowCount() >= 1){
+        //確認用パスワードが一致していない
+        if(!editUserPassword.newPassword.equals(editUserPassword.confirmPassword)){
             return null;
         }
+        //現在のパスワードが間違っている
+        if(!BCrypt.checkpw(editUserPassword.oldPassword,user.getPassword())){
+            return null;
+        }        
         
-        user.setUserId(editUser.userId);
-        user.setNickName(editUser.nickName);
-        user.update();
+        user.setPassword(editUserPassword.newPassword);
+        user.passwordHashUpadate();
         
         return user;
     }

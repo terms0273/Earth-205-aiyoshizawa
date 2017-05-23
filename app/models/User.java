@@ -129,4 +129,11 @@ public class User extends Model{
         password = BCrypt.hashpw(password, BCrypt.gensalt());
         super.save();
     }
+        /**
+     * saveするときにパスワードをハッシュ化する
+     */
+    public void passwordHashUpadate(){
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        super.update();
+    }
 }

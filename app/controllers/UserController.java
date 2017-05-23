@@ -102,7 +102,7 @@ public class UserController extends Controller{
             return badRequest(edit.render(editUserForm,editUserPasswordForm));
         }
         long id = Long.parseLong(session("id"));
-        UserModelService.updateUser(id, editUserPasswordForm.get());
+        UserModelService.updatePasswordUser(id, editUserPasswordForm.get());
         return redirect(routes.UserController.index());
 
     }
