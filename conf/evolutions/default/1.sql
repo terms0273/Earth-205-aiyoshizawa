@@ -9,6 +9,7 @@ create table user (
   password                  varchar(255),
   nick_name                 varchar(255),
   delete_flag               tinyint(1) default 0,
+  type                      integer,
   constraint pk_user primary key (id))
 ;
 

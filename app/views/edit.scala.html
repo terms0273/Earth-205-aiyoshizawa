@@ -1,21 +1,34 @@
-@(loginForm: Form[models.User])
+@(editUser: Form[dto.EditUser],editUserPassword: Form[dto.EditUserPassword])
 @import helper._
 
 @main("Register") {
-    <h2>新規登録</h2>
-    @form(action = routes.UserController.create){
+    <h2>UserEdit</h2>
+    @form(action = routes.UserController.update){
         @inputText(
-            field = loginForm("userId"),
+            field = editUser("userId"),
             '_label -> "UserID"
         )
         @inputText(
-            field = loginForm("nickName"),
+            field = editUser("nickName"),
             '_label -> "NickName"
         )
+        <input type="submit" value="Edit">
+    }
+    
+    <h2>PasswordEdit</h2>
+    @form(action = routes.UserController.passwordUpdate){
         @inputPassword(
-            field = loginForm("password"),
-            '_label -> "Password"
+            field = editUserPassword("oldPassword"),
+            '_label -> "OldPassword"
         )
-        <input type="submit" value="登録">
+        @inputPassword(
+            field = editUserPassword("newPassword"),
+            '_label -> "NewPassword"
+        )
+        @inputPassword(
+            field = editUserPassword("confirmPassword"),
+            '_label -> "ConfirmPassword"
+        )
+        <input type="submit" value="Edit">
     }
 }

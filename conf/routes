@@ -11,6 +11,21 @@ GET     /register                   controllers.UserController.register()
 POST    /create                     controllers.UserController.create()
 
 #main page
-GET     /index                      controllers.UserController.index()                   
+GET     /index                      controllers.UserController.index() 
+
+#userList page
+GET     /userList                   controllers.UserController.userList() 
+
+#deleteUser page
+GET     /delete/:id                 controllers.UserController.delete(id:Long) 
+
+#edit page
+GET     /edit                       controllers.UserController.edit() 
+POST    /update                     controllers.UserController.update() 
+POST    /passwordUpdate             controllers.UserController.passwordUpdate() 
+
+#logout
+GET     /logout                     controllers.UserController.logout() 
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

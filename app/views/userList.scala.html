@@ -1,17 +1,19 @@
-@(loginForm: Form[models.User],userList: List[models.User])
+@(userList: List[models.User])
 @import helper._
 
 @main("Register") {
-    <h2>ユーザー削除</h2>
+    <h2>ユーザー一覧</h2>
     <table>
         <tr>
             <th>UserID</th>
             <th>NickName</th>
+            <th></th>
         </tr>
         @for(user <- userList){
         <tr>
-            <td>user.userId</td>
-            <td>user.nickName</td>
+            <td>@user.getUserId()</td>
+            <td>@user.getNickName()</td>
+            <td><input type="button" value="Delete" onclick="location.href='./delete/@user.getId()'"></td>
         </tr>
         }
     </table>

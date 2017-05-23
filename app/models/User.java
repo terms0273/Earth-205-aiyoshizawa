@@ -20,30 +20,29 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 @Entity
 public class User extends Model{
-    public User(String userId,String password,String nickName){
-        setUserId(userId);
-        setPassword(password);
-        setNickName(nickName);
-        setDeleteFlag(false);
-    }
     @Id
     private Long id;
     
-    @NotBlank
-    @Pattern(message = "1~20の英数字で入力してください。" ,value = "^[a-zA-Z0-9]{1,20}$")
     private String userId;
     
-
-    @NotBlank
-    @Pattern(message = "5~20の英数字で入力してください。" ,value = "^[a-zA-Z0-9]{5,20}$")
     private String password;
     
     private String nickName;
     
-    private boolean deleteFlag = false;
+    private boolean deleteFlag;
+    
+    private int type;
     
     public static Finder<Long, User> find = new Finder<>(Long.class,User.class);
     
+    
+    public User(String userId,String password,String nickName,int type){
+        setUserId(userId);
+        setPassword(password);
+        setNickName(nickName);
+        setDeleteFlag(false);
+        
+    }
     /**
      * @return the id
      */
@@ -94,6 +93,19 @@ public class User extends Model{
      */
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    /**
+     * @return the type
+     */
+    public int getType() {
+        return type;
+    }
+    /**
+     * @param type the type to set
+     */
+    public void setType(int type) {
+        this.type = type;
     }
     
     /**

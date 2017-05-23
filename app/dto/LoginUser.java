@@ -14,6 +14,7 @@ import play.data.validation.Constraints.*;
 public class LoginUser {
     @Required(message="UserIDが空白です")
     public String userId;
+    
     @Required(message="passwordが空白です")
     public String password;
 }
