@@ -1,0 +1,21 @@
+@(loginForm: Form[models.User])
+@import helper._
+
+@main("Register") {
+    <h2>新規登録</h2>
+    @form(action = routes.UserController.create){
+        @inputText(
+            field = loginForm("userId"),
+            '_label -> "UserID"
+        )
+        @inputText(
+            field = loginForm("nickName"),
+            '_label -> "NickName"
+        )
+        @inputPassword(
+            field = loginForm("password"),
+            '_label -> "Password"
+        )
+        <input type="submit" value="登録">
+    }
+}
