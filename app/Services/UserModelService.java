@@ -5,9 +5,7 @@
  */
 package Services;
 
-import dto.EditUser;
-import dto.EditUserPassword;
-import dto.LoginUser;
+import dto.*;
 import models.User;
 import play.libs.F.*;
 import utils.BCrypt;
@@ -57,6 +55,24 @@ public class UserModelService {
             return new None<List<User>>();
         }
         return userList;
+    }
+    /**
+     * createUserをuserに変換しDBに保存する
+     * @param createUser
+     * @return エラー:null,更新成功:User
+     */
+    public static User cureateUser(CreateUser createUser){
+        if(!createUser.password.equals(createUser.confirmPassword)){
+            return null;
+        }
+        User user = new User(
+                createUser.userId,
+                createUser.password,
+                createUser.nickName,
+                User.TYPE_USER
+        );
+        user.passwordHashSave();
+        return user;
     }
     /**
      * idで引っ張ってきたデータを元にditUserで上書きする

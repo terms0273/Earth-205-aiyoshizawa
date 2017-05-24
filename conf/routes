@@ -11,7 +11,7 @@ GET     /register                   controllers.UserController.register()
 POST    /create                     controllers.UserController.create()
 
 #main page
-GET     /index                      controllers.UserController.index() 
+GET     /                           controllers.UserController.index() 
 
 #userList page
 GET     /userList                   controllers.UserController.userList() 

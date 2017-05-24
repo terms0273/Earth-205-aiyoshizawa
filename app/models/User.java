@@ -20,6 +20,10 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 @Entity
 public class User extends Model{
+    
+    public static final int TYPE_ADMIN = 1;
+    public static final int TYPE_USER = 0;
+    
     @Id
     private Long id;
     
