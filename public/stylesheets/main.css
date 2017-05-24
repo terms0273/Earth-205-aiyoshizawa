@@ -1,0 +1,18 @@
+html{
+    background-color: #ffe4b3;
+}
+#header {
+    background-color: #ffa500;
+}
+#header h1{
+    color: #0059ff;
+}
+#side,#main {
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+}
+#side h2,#main h2{
+    color: #ff5900;
+    border-bottom:#ffa500 solid 1px;
+}

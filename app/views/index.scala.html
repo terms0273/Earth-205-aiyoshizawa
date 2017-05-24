@@ -1,7 +1,34 @@
 @(loginForm: Form[models.User])
 @main("Main") {
-    <h2>MainPage</h2>
-    <a href="./userList">UserDelete</a>
-    <a href="./edit">UserEdit</a>
-    <a href="./logout">Logout</a>
+
+    <div class="uk-margin" uk-grid>
+        <div class="uk-width-auto">
+            <div id="side" class="uk-margin-left uk-padding-small">
+                <h2>Menu</h2>
+                <ul>
+                    <li><a href="./userList">UserDelete</a></li>
+                    <li><a href="./edit">UserEdit</a></li>
+                    <li><a href="./logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="uk-width-expand ">
+            <div id="main" class="uk-margin-right uk-padding-small">
+                <h2>MainPage</h2>
+                <ul>
+                    <li>testText</li>
+                    <li>testText</li>
+                    <li>testText</li>
+                    <li>testText</li>
+                    <li>testText</li>
+                    <li>testText</li>
+                    <li>testText</li>
+                    <li>testText</li>
+                    <li>testText</li>
+                    <li>testText</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 }
