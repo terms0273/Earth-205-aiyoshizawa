@@ -80,9 +80,7 @@ public class UserController extends Controller{
     public static Result edit(){
         long id = Long.parseLong(session("id"));
         User user = User.find.byId(id);
-        EditUser editUser = new EditUser();
-        editUser.userId = user.getUserId();
-        editUser.nickName = user.getNickName();
+        EditUser editUser = new EditUser(user);
         
         Form<EditUser> editUserForm = new Form(EditUser.class).fill(editUser);
         Form<EditUserPassword> editUserPasswordForm = new Form(EditUserPassword.class);
@@ -93,6 +91,7 @@ public class UserController extends Controller{
     public static Result update(){
         Form<EditUser> editUserForm = new Form(EditUser.class).bindFromRequest();
         if(editUserForm.hasErrors()){
+            
             Form<EditUserPassword> editUserPasswordForm = new Form(EditUserPassword.class);
             return badRequest(edit.render(editUserForm,editUserPasswordForm));
         }
@@ -104,7 +103,11 @@ public class UserController extends Controller{
     public static Result passwordUpdate(){
         Form<EditUserPassword> editUserPasswordForm = new Form(EditUserPassword.class).bindFromRequest();
         if(editUserPasswordForm.hasErrors()){
-            Form<EditUser> editUserForm = new Form(EditUser.class);
+            long id = Long.parseLong(session("id"));
+            User user = User.find.byId(id);
+            EditUser editUser = new EditUser(user);
+        
+            Form<EditUser> editUserForm = new Form(EditUser.class).fill(editUser);
             return badRequest(edit.render(editUserForm,editUserPasswordForm));
         }
         long id = Long.parseLong(session("id"));

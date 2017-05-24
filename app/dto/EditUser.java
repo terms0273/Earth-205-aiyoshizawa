@@ -5,6 +5,7 @@
  */
 package dto;
 
+import models.User;
 import play.data.validation.Constraints.*;
 
 /**
@@ -18,4 +19,9 @@ public class EditUser {
     @Required(message="nickNameが空白です")
     public String nickName;
     
+    public EditUser(){}
+    public EditUser(User user){
+        userId = user.getUserId();
+        nickName = user.getNickName();
+    }
 }
