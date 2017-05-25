@@ -1,20 +1,14 @@
 package views;
 
 
-import models.User;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import dto.LoginUser;
 import org.junit.*;
 import play.mvc.*;
+import views.html.*;
 
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 import play.data.Form;
-import static play.data.Form.form;
-import play.test.FakeApplication;
-
 
 /**
 *
@@ -30,7 +24,7 @@ public class LoginTest {
      */
     @Test
     public void testLogin() {
-        Content html = views.html.login.render(new Form(User.class));
+        Content html = login.render(new Form(LoginUser.class));
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Earth");
         assertThat(contentAsString(html)).contains("ログイン");

@@ -16,3 +16,10 @@ html{
     color: #ff5900;
     border-bottom:#ffa500 solid 1px;
 }
+.uk-button{
+    background-color: #ffa500;
+    color: #0059ff;
+}
+.error>.error{
+    color: #f00;
+}

@@ -24,7 +24,7 @@ import play.test.FakeApplication;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class UserTest extends FakeApp{
+public class UserControllerTest extends FakeApp{
     
     /**
      * ログイン成功時,メイン画面へ遷移する
@@ -38,7 +38,6 @@ public class UserTest extends FakeApp{
         map.put("password","password");
         
         Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
-        
         assertThat(status(result)).isEqualTo(SEE_OTHER);
         assertThat(redirectLocation(result)).isEqualTo("/doLogin");
         

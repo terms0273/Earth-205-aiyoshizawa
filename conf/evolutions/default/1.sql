@@ -4,23 +4,27 @@
 # --- !Ups
 
 create table user (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   user_id                   varchar(255),
   password                  varchar(255),
   nick_name                 varchar(255),
-  delete_flag               tinyint(1) default 0,
+  delete_flag               boolean,
   type                      integer,
   constraint pk_user primary key (id))
 ;
+
+create sequence user_seq;
 
 
 
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table user;
+drop table if exists user;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists user_seq;
 

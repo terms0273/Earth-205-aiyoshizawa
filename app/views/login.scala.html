@@ -2,6 +2,8 @@
 @import helper._
 
 @main("Login") {
+    <div id="main" class="uk-margin-left uk-margin-right uk-padding">
+        <h2>Login</h2>
     @form(action = CSRF(routes.UserController.doLogin())){
         @inputText(
             field = loginForm("userId"),
@@ -13,7 +15,8 @@
             '_label -> "Password",
             '_help -> ""
         )
-        <input type="submit" value="ログイン">
+        <input type="submit" value="ログイン" class="uk-button">
     }
     <a href="/register">初めての方はこちら</a>
+    </div>
 }
