@@ -33,7 +33,7 @@ public class User extends Model{
     
     private String nickName;
     
-    private boolean deleteFlag;
+    private boolean deleteFlag = false;
     
     private int type;
     
