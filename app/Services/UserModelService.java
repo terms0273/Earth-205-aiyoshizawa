@@ -63,6 +63,11 @@ public class UserModelService {
      */
     public static User cureateUser(CreateUser createUser){
         if(!createUser.password.equals(createUser.confirmPassword)){
+            //パスワードが一致しない
+            return null;
+        }
+        if(User.find.where().eq("user_id",createUser.userId).findRowCount() >= 1){
+            //すでに存在するID
             return null;
         }
         User user = new User(
