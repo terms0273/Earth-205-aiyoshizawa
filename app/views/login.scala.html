@@ -4,7 +4,7 @@
 @main("Login") {
     <div id="main" class="uk-margin-left uk-margin-right uk-padding">
         <h2>Login</h2>
-    @form(action = CSRF(routes.UserController.doLogin())){
+    @form(action = routes.UserController.doLogin()){
         @inputText(
             field = loginForm("userId"),
             '_label -> "UserID",

@@ -4,7 +4,7 @@
 @main("CreateUesr") {
     <div id="main" class="uk-margin-left uk-margin-right uk-padding">
         <h2>CreateUesr</h2>
-        @form(action = CSRF(routes.UserController.create())){
+        @form(action = routes.UserController.create()){
             @inputText(
                 field = createForm("userId"),
                 '_label -> "UserID",

@@ -3,7 +3,7 @@
 
 @main("UserEdit") {
     <h2>UserEdit</h2>
-    @form(action = CSRF(routes.UserController.update())){
+    @form(action = routes.UserController.update()){
         @inputText(
             field = editUser("userId"),
             '_label -> "UserID",
@@ -18,7 +18,7 @@
     }
     
     <h2>PasswordEdit</h2>
-    @form(action = CSRF(routes.UserController.passwordUpdate())){
+    @form(action = routes.UserController.passwordUpdate()){
         @inputPassword(
             field = editUserPassword("oldPassword"),
             '_label -> "OldPassword",
