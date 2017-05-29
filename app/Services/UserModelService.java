@@ -29,20 +29,27 @@ public class UserModelService {
             User user = User.find.where().eq("user_id", entry.userId).findUnique();
             //user_idが見つからない
             if(user == null){
+                System.out.println("user_idが見つからない");
                 return new None<User>(); 
             }
             
             //user_idに削除フラグがついている
             if(user.isDeleteFlag()){
+                System.out.println("user_idに削除フラグがついている");
                 return new None<User>(); 
             }
             
             //passwordの比較
+            
             String dbpw = user.getPassword();
+            System.out.println(dbpw);
+            System.out.println(entry.password);
             if(BCrypt.checkpw(entry.password, dbpw)){
                 return OptionUtil.apply(user);
             }
+            System.out.println("passwordが間違っている");
         }
+        System.out.println("？？？？？？？？？？？？？？？？？？");
         return new None<User>();
     }
     /**

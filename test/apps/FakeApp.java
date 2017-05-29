@@ -46,7 +46,7 @@ public class FakeApp {
     public void createCleanDb(){
         initDb();
         
-        user = new User("205","aiyoshi","password",User.TYPE_USER);
+        user = new User("205","password","aiyoshi",User.TYPE_USER);
         user.passwordHashSave();
     }
     public static void initDb(){

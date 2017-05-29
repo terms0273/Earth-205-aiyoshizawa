@@ -14,6 +14,8 @@ import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 import play.data.Form;
 import static play.data.Form.form;
+import static play.mvc.Http.Status.BAD_REQUEST;
+import static play.mvc.Http.Status.OK;
 import static play.mvc.Http.Status.SEE_OTHER;
 import play.test.FakeApplication;
 
@@ -29,6 +31,9 @@ public class UserControllerTest extends FakeApp{
     /**
      * ログイン成功時,メイン画面へ遷移する
      * ログイン成功時,セッションに値が入っている
+     * ログアウトできる
+     * ログインユーザーのセッションが破棄されている
+     * ログイン画面に遷移する
      */
     @Test
     public void testLoginSuccess() {
@@ -39,11 +44,16 @@ public class UserControllerTest extends FakeApp{
         
         Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
         assertThat(status(result)).isEqualTo(SEE_OTHER);
-        assertThat(redirectLocation(result)).isEqualTo("/doLogin");
+        assertThat(redirectLocation(result)).isEqualTo("/");
+        assertThat(session(result)).isNotEmpty();
         
-        assertThat(session(result)).isNotNull();
+        result = route(fakeRequest(GET,"/logout").withSession("id", "1"));
+        assertThat(status(result)).isEqualTo(SEE_OTHER);
+        assertThat(redirectLocation(result)).isEqualTo("/login");
+        assertThat(session(result)).isEmpty();
     }
-        /**
+    
+    /**
      * ログイン失敗時,ログイン画面へ遷移する
      * ログイン失敗時,IDもしくはPasswordが間違っていますと表示される
      * ログイン失敗時,フォームの値がクリアされている
@@ -57,14 +67,18 @@ public class UserControllerTest extends FakeApp{
         map.put("password","aaaa");
         
         Result result = route(fakeRequest(POST,"/doLogin").withFormUrlEncodedBody(map));
-        Form<User> form = new Form(User.class).bindFromRequest();
-        User getUser = form.get();
-        assertThat(getUser.getUserId()).isEmpty();
-        assertThat(getUser.getPassword()).isEmpty();
+        
+
+        assertThat(contentAsString(result)).doesNotContain(map.get("password"));
         
         assertThat(status(result)).isEqualTo(BAD_REQUEST);
-        assertThat(redirectLocation(result)).isEqualTo("/doLogin");
-        assertThat(contentAsString(result)).contains("IDかPasswordまたはその両方が間違っています");
-        assertThat(session(result)).isNull();
+        assertThat(contentAsString(result)).contains("Login");
+        //assertThat(contentAsString(result)).contains("IDかPasswordまたはその両方が間違っています");
+        assertThat(session(result)).isEmpty();
+    }
+    
+    @Test
+    public void testLogout(){
+
     }
 }

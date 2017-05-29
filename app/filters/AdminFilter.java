@@ -39,7 +39,7 @@ public class AdminFilter extends Security.Authenticator {
         if(returnUrl == null){
             returnUrl = "/";
         }
-        ctx.session().put("returnUrl",returnUrl);
+        //ctx.session().put("returnUrl",returnUrl);
         return redirect(controllers.routes.UserController.index());
     }
 }

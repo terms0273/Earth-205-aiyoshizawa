@@ -30,14 +30,15 @@ public class UserController extends Controller{
     public static Result doLogin(){
         Form<LoginUser> form = new Form(LoginUser.class).bindFromRequest();
         if(form.hasErrors()){
+            System.out.println("バリデーションエラー");
             return badRequest(login.render(form));
         }
         
         LoginUser loginUser = form.get();
-        
         Option<User> optionUser = UserModelService.login(loginUser);
         if(!optionUser.isDefined()){
             //TODO:パスワードまたはIDが間違っている
+            System.out.println("パスワードまたはIDが間違っている");
             return badRequest(login.render(form));
         }
         session("id",String.valueOf(optionUser.get().getId()));
