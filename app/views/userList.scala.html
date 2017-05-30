@@ -2,19 +2,25 @@
 @import helper._
 
 @main("UserList") {
-    <h2>UserList</h2>
-    <table>
-        <tr>
-            <th>UserID</th>
-            <th>NickName</th>
-            <th></th>
-        </tr>
-        @for(user <- userList){
-        <tr>
-            <td>@user.getUserId()</td>
-            <td>@user.getNickName()</td>
-            <td><input type="button" value="Delete" onclick="location.href='./delete/@user.getId()'"></td>
-        </tr>
-        }
-    </table>
+    <div id="main" class="uk-margin-left uk-margin-right uk-padding">
+        <h2>UserList</h2>
+        <table class="uk-table uk-table-striped uk-table-hover">
+            <thead>
+                <tr>
+                    <th>UserID</th>
+                    <th>NickName</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(user <- userList){
+                <tr>
+                    <td>@user.getUserId()</td>
+                    <td>@user.getNickName()</td>
+                    <td><input type="button" value="Delete" onclick="location.href='./delete/@user.getId()'" class="uk-button"></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
