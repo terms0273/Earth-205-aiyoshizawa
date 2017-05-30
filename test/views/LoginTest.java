@@ -27,7 +27,7 @@ public class LoginTest {
         Content html = login.render(new Form(LoginUser.class));
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Earth");
-        assertThat(contentAsString(html)).contains("ログイン");
+        assertThat(contentAsString(html)).contains("Login");
         assertThat(contentAsString(html)).contains("UserID");
         assertThat(contentAsString(html)).contains("Password");
     }

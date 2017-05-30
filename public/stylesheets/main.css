@@ -20,6 +20,10 @@ html{
     background-color: #ffa500;
     color: #0059ff;
 }
+.uk-button:hover{
+    background-color: #ffe4b3;
+    color: #0059ff;
+}
 .error>.error{
     color: #f00;
 }
