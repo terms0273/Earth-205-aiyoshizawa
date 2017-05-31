@@ -23,6 +23,8 @@ import views.html.*;
  * @author y-aiyoshizawa
  */
 public class UserController extends Controller{
+    private static UserModelService userModelService = new UserModelService();
+    
     public static Result login() {
         Form form = new Form(LoginUser.class);
         return ok(login.render(form));
@@ -35,7 +37,7 @@ public class UserController extends Controller{
         
         LoginUser loginUser = form.get();
         
-        Option<User> optionUser = UserModelService.login(loginUser);
+        Option<User> optionUser = userModelService.login(loginUser);
         if(!optionUser.isDefined()){
             //TODO:パスワードまたはIDが間違っている
             return badRequest(login.render(form));
@@ -57,7 +59,7 @@ public class UserController extends Controller{
         if(form.hasErrors()){
             return badRequest(register.render(form));
         }
-        User user = UserModelService.cureateUser(form.get());
+        User user = userModelService.cureateUser(form.get());
         if(user == null){
             return badRequest(register.render(form));
         }
@@ -65,7 +67,7 @@ public class UserController extends Controller{
     }
     @Security.Authenticated(AdminFilter.class)
     public static Result userList(){
-        Option<List<User>> optionUserList = UserModelService.getUserList();
+        Option<List<User>> optionUserList = userModelService.getUserList();
         if(optionUserList.isDefined()){
             //TODO:削除したい値が見つからないエラー
         }
@@ -73,7 +75,7 @@ public class UserController extends Controller{
     }
     @Security.Authenticated(AdminFilter.class)
     public static Result delete(long id){
-        UserModelService.deleteUser(id);
+        userModelService.deleteUser(id);
         return redirect(routes.UserController.userList());
     }
     @Security.Authenticated(LoginFilter.class)
@@ -96,7 +98,7 @@ public class UserController extends Controller{
             return badRequest(edit.render(editUserForm,editUserPasswordForm));
         }
         long id = Long.parseLong(session("id"));
-        UserModelService.updateUser(id, editUserForm.get());
+        userModelService.updateUser(id, editUserForm.get());
         return redirect(routes.UserController.index());
     }
     @Security.Authenticated(LoginFilter.class)
@@ -111,7 +113,7 @@ public class UserController extends Controller{
             return badRequest(edit.render(editUserForm,editUserPasswordForm));
         }
         long id = Long.parseLong(session("id"));
-        UserModelService.updatePasswordUser(id, editUserPasswordForm.get());
+        userModelService.updatePasswordUser(id, editUserPasswordForm.get());
         return redirect(routes.UserController.index());
 
     }

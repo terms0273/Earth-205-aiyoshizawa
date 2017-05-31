@@ -17,42 +17,41 @@ import java.util.*;
  */
 public class UserModelService {
     
+    String errMessage;
     /**
      * ログイン判定
      * @param entry
-     * @return エラーならNone<User>(),それ以外ならUser
+     * @return null,それ以外ならUser
      */
-    public static Option<User> login(LoginUser entry){
+    public User login(LoginUser entry){
         
-        Option<LoginUser> entryOps = OptionUtil.apply(entry);
-        if(entryOps.isDefined()){
-            User user = User.find.where().eq("user_id", entry.userId).findUnique();
-            //user_idが見つからない
-            if(user == null){
-                return new None<User>(); 
-            }
-            
-            //user_idに削除フラグがついている
-            if(user.isDeleteFlag()){
-                return new None<User>(); 
-            }
-            
-            //passwordの比較
-            String dbpw = user.getPassword();
-            if(BCrypt.checkpw(entry.password, dbpw)){
-                return OptionUtil.apply(user);
-            }
+        User user = User.find.where().eq("user_id", entry.userId).findUnique();
+        //user_idが見つからない
+        if(user == null){
+            return null; 
         }
-        return new None<User>();
+
+        //user_idに削除フラグがついている
+        if(user.isDeleteFlag()){
+            return null; 
+        }
+
+        //passwordの比較
+        String dbpw = user.getPassword();
+        if(!BCrypt.checkpw(entry.password, dbpw)){
+             return null;
+        }
+        return user;
+       
     }
     /**
      * deleteFlagが立っていないユーザー一覧を返す
      * @return ユーザーリスト
      */
-    public static Option<List<User>> getUserList(){
-        Option<List<User>> userList = OptionUtil.apply(User.find.where().eq("delete_flag",false).findList());
-        if(userList.get().size() == 0){
-            return new None<List<User>>();
+    public List<User> getUserList(){
+        List<User> userList = User.find.where().eq("delete_flag",false).findList();
+        if(userList.size() == 0){
+            return null;
         }
         return userList;
     }
@@ -61,7 +60,7 @@ public class UserModelService {
      * @param createUser
      * @return エラー:null,更新成功:User
      */
-    public static User cureateUser(CreateUser createUser){
+    public User cureateUser(CreateUser createUser){
         if(!createUser.password.equals(createUser.confirmPassword)){
             //パスワードが一致しない
             return null;
@@ -85,7 +84,7 @@ public class UserModelService {
      * @param editUser
      * @return エラー:null,更新成功:User
      */
-    public static User updateUser(Long id,EditUser editUser){
+    public User updateUser(Long id,EditUser editUser){
         User user = User.find.byId(id);
         if(user == null){
             return null;
@@ -107,7 +106,7 @@ public class UserModelService {
      * @param editUser
      * @return エラー:null,更新成功:User
      */
-    public static User updatePasswordUser(Long id,EditUserPassword editUserPassword){
+    public User updatePasswordUser(Long id,EditUserPassword editUserPassword){
         User user = User.find.byId(id);
         if(user == null){
             return null;
@@ -130,7 +129,7 @@ public class UserModelService {
      * idをもらい論理削除する
      * @return idが見つからない:null,削除成功:User
      */
-    public static User deleteUser(long id){
+    public User deleteUser(long id){
         User user = User.find.byId(id);
         if(user == null){
             return null;
