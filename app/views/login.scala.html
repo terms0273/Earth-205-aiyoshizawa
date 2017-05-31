@@ -1,0 +1,22 @@
+@(loginForm: Form[dto.LoginUser])
+@import helper._
+
+@main("Login") {
+    <div id="main" class="uk-margin-left uk-margin-right uk-padding">
+        <h2>Login</h2>
+    @form(action = CSRF(routes.UserController.doLogin())){
+        @inputText(
+            field = loginForm("userId"),
+            '_label -> "UserID",
+            '_help -> ""
+        )
+        @inputPassword(
+            field = loginForm("password"),
+            '_label -> "Password",
+            '_help -> ""
+        )
+        <input type="submit" value="Login" class="uk-button">
+    }
+    <a href="/register">初めての方はこちら</a>
+    </div>
+}

@@ -1,0 +1,43 @@
+@(editUser: Form[dto.EditUser],editUserPassword: Form[dto.EditUserPassword])
+@import helper._
+
+@main("UserEdit") {
+    <div id="main" class="uk-margin-left uk-margin-right uk-margin-bottom uk-padding">
+        <h2>UserEdit</h2>
+        @form(action = CSRF(routes.UserController.update())){
+            @inputText(
+                field = editUser("userId"),
+                '_label -> "UserID",
+                '_help -> ""
+            )
+            @inputText(
+                field = editUser("nickName"),
+                '_label -> "NickName",
+                '_help -> ""
+            )
+            <input type="submit" value="Edit" class="uk-button">
+        }
+    </div>
+    <div id="main" class="uk-margin-left uk-margin-right uk-margin-bottom uk-padding">
+        <h2>PasswordEdit</h2>
+        @form(action = CSRF(routes.UserController.passwordUpdate())){
+            @inputPassword(
+                field = editUserPassword("oldPassword"),
+                '_label -> "OldPassword",
+                '_help -> ""
+            )
+            @inputPassword(
+                field = editUserPassword("newPassword"),
+                '_label -> "NewPassword",
+                '_help -> ""
+            )
+            @inputPassword(
+                field = editUserPassword("confirmPassword"),
+                '_label -> "ConfirmPassword",
+                '_help -> ""
+            )
+            <input type="submit" value="Edit" class="uk-button">
+        }
+        <input type="button" value="Back" onclick="location.href='/'" class="uk-button uk-margin-top">
+    </div>
+}

@@ -1,0 +1,32 @@
+@(createForm: Form[dto.CreateUser])
+@import helper._
+
+@main("CreateUesr") {
+    <div id="main" class="uk-margin-left uk-margin-right uk-padding">
+        <h2>CreateUesr</h2>
+        @form(action = CSRF(routes.UserController.create())){
+            @inputText(
+                field = createForm("userId"),
+                '_label -> "UserID",
+                '_help -> ""
+            )
+            @inputText(
+                field = createForm("nickName"),
+                '_label -> "NickName",
+                '_help -> ""
+            )
+            @inputPassword(
+                field = createForm("password"),
+                '_label -> "Password",
+                '_help -> ""
+            )
+            @inputPassword(
+                field = createForm("confirmPassword"),
+                '_label -> "ConfirmPassword",
+                '_help -> ""
+            )
+        <input type="button" value="Back" onclick="location.href='/'" class="uk-button">
+        <input type="submit" value="Create" for="" class="uk-button">
+        }
+    </div>
+}
