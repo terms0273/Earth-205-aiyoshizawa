@@ -17,29 +17,35 @@ import java.util.*;
  */
 public class UserModelService {
     
-    String errMessage;
+    //privateにしてgetメソッドを作ってもいいかも
+    public String message;
+    
     /**
      * ログイン判定
      * @param entry
      * @return null,それ以外ならUser
      */
     public User login(LoginUser entry){
+        message = "";
         
         User user = User.find.where().eq("user_id", entry.userId).findUnique();
         //user_idが見つからない
         if(user == null){
+            message = "IDかPasswordまたはその両方が間違っています";
             return null; 
         }
 
         //user_idに削除フラグがついている
         if(user.isDeleteFlag()){
+            message = "IDかPasswordまたはその両方が間違っています";
             return null; 
         }
 
         //passwordの比較
         String dbpw = user.getPassword();
         if(!BCrypt.checkpw(entry.password, dbpw)){
-             return null;
+            message = "IDかPasswordまたはその両方が間違っています";
+            return null;
         }
         return user;
        
@@ -48,9 +54,11 @@ public class UserModelService {
      * deleteFlagが立っていないユーザー一覧を返す
      * @return ユーザーリスト
      */
-    public List<User> getUserList(){
-        List<User> userList = User.find.where().eq("delete_flag",false).findList();
+    public List<User> getUserList(Long id){
+        message = "";
+        List<User> userList = User.find.where().eq("delete_flag",false).ne("id", id).findList();
         if(userList.size() == 0){
+            message = "削除できるUserが見つかりませんでした";
             return null;
         }
         return userList;
@@ -61,12 +69,14 @@ public class UserModelService {
      * @return エラー:null,更新成功:User
      */
     public User cureateUser(CreateUser createUser){
+        message = "";
+        
         if(!createUser.password.equals(createUser.confirmPassword)){
-            //パスワードが一致しない
+            message = "ConfirmPasswordと一致しません";
             return null;
         }
         if(User.find.where().eq("user_id",createUser.userId).findRowCount() >= 1){
-            //すでに存在するID
+            message = "既に存在するIDです";
             return null;
         }
         User user = new User(
@@ -76,6 +86,7 @@ public class UserModelService {
                 User.TYPE_USER
         );
         user.passwordHashSave();
+        message = "User登録が成功しました";
         return user;
     }
     /**
@@ -85,12 +96,15 @@ public class UserModelService {
      * @return エラー:null,更新成功:User
      */
     public User updateUser(Long id,EditUser editUser){
+        message = "";
         User user = User.find.byId(id);
         if(user == null){
+            message = "Userが見つかりません";
             return null;
         }
-        //ユーザーIDに変更があるAND変更後のUserIDが既に存在する
+        //ユーザーIDに変更がある時、そのUserIDが既に存在するかどうか
         if(!user.getUserId().equals(editUser.userId) && User.find.where().eq("user_id",editUser.userId).findRowCount() >= 1){
+            message = "変更しようとしているUserは既に存在します";
             return null;
         }
         
@@ -98,6 +112,7 @@ public class UserModelService {
         user.setNickName(editUser.nickName);
         user.update();
         
+        message = "User変更が成功しました";
         return user;
     }
     /**
@@ -107,22 +122,25 @@ public class UserModelService {
      * @return エラー:null,更新成功:User
      */
     public User updatePasswordUser(Long id,EditUserPassword editUserPassword){
+        message = "";
         User user = User.find.byId(id);
         if(user == null){
+            message = "Userが見つかりません";
             return null;
         }
-        //確認用パスワードが一致していない
         if(!editUserPassword.newPassword.equals(editUserPassword.confirmPassword)){
+            message = "ConfirmPasswordと一致しません";
             return null;
         }
-        //現在のパスワードが間違っている
         if(!BCrypt.checkpw(editUserPassword.oldPassword,user.getPassword())){
+            message = "OldPasswordが間違っています";
             return null;
         }        
         
         user.setPassword(editUserPassword.newPassword);
         user.passwordHashUpadate();
         
+        message = "User変更が成功しました";
         return user;
     }
     /**
@@ -130,14 +148,17 @@ public class UserModelService {
      * @return idが見つからない:null,削除成功:User
      */
     public User deleteUser(long id){
+        message = "";
         User user = User.find.byId(id);
         if(user == null){
+            message = "Userが見つかりません";
             return null;
         }
         
         user.setDeleteFlag(true);
         user.update();
         
+        message = "User削除が成功しました";
         return user;
     }
 }

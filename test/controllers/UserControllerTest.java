@@ -43,7 +43,7 @@ public class UserControllerTest extends FakeApp{
         
         assertThat(session(result)).isNotNull();
     }
-        /**
+   /**
      * ログイン失敗時,ログイン画面へ遷移する
      * ログイン失敗時,IDもしくはPasswordが間違っていますと表示される
      * ログイン失敗時,フォームの値がクリアされている
