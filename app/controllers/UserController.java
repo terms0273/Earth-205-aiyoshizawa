@@ -147,4 +147,8 @@ public class UserController extends Controller{
         session().clear();
         return redirect(routes.UserController.login());
     }
+    
+    public static Result test(){
+        return ok(test.render());
+    }
 }
