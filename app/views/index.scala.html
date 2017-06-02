@@ -14,19 +14,96 @@
         </div>
         <div class="uk-width-expand ">
             <div id="main" class="uk-margin-right uk-padding-small">
-                <h2>MainPage</h2>
-                <ul>
-                    <li>testText</li>
-                    <li>testText</li>
-                    <li>testText</li>
-                    <li>testText</li>
-                    <li>testText</li>
-                    <li>testText</li>
-                    <li>testText</li>
-                    <li>testText</li>
-                    <li>testText</li>
-                    <li>testText</li>
-                </ul>
+                  <div class="uk-flex uk-flex-column uk-margin">
+                    <h2><span id="city-name">Current weather in</span></h2>
+                    <div id="alert-area"></div>
+                    <div class=" uk-margin uk-flex">
+                      <input class="uk-input input-city" id="input-city" type="text" placeholder="Enter place name">
+                      <button class="uk-button uk-button-primary" id="search-city">SEARCH</button>
+                    </div>
+                  </div>
+                  <div id="contents">
+                    <div class="represent">
+                      <div class="uk-overflow-auto represent-contents">
+                        <table class="uk-table uk-table-hover">
+                          <thead>
+                            <tr>
+                              <th>ITEM</th>
+                              <th>DATA</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="weahter-td">
+                                <span class="weather-label">WEATHER</span>
+                              </td>
+                              <td id="weather">
+                              </td>
+                            </tr>
+                              <tr>
+                                  <td class="weahter-td">
+                                    <span class="weather-label">ICON</span>
+                                  </td>
+                                <td id="icon">
+                                </td>
+                              </tr>
+                            <tr>
+                              <td class="temperature-td">
+                                <span class="temperature-label">TEMPERATURE</span>
+                              </td>
+                              <td id="temperature"></td>
+                            </tr>
+                            <tr>
+                              <td class="flow-td">
+                                <span class="flow-label">AIR FLOW</span>
+                              </td>
+                              <td id="wind"></td>
+                            </tr>
+                            <tr>
+                              <td class="cloud-td">
+                                <span class="cloud-label">CLOUD COVER</span>
+                              </td>
+                              <td id="cloud"></td>
+                            </tr>
+                            <tr>
+                              <td class="pressure-td">
+                                <span class="pressure-label">PRESSURE</span>
+                              </td>
+                              <td id="pressure"></td>
+                            </tr>
+                            <tr>
+                              <td class="humidity-td">
+                                <span class="humidity-label">HUMIDITY</span>
+                              </td>
+                              <td id="humidity"></td>
+                            </tr>
+                            <tr>
+                              <td class="sunrise-td">
+                                <span class="sunrise-label">SUNRISE</span>
+                              </td>
+                              <td id="sunrise"></td>
+                            </tr>
+                            <tr>
+                              <td class="sunset-td">
+                                <span class="sunset-label">SUNSET</span>
+                              </td>
+                              <td id="sunset"></td>
+                            </tr>
+                            <tr>
+                              <td class="latlon-td">
+                                <span class="latlon-label">LAT LON</span>
+                              </td>
+                              <td id="latlon"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div id="map-contents">
+                      <div id="map"></div>
+                    </div>
+                  </div>
+              <script src="@routes.Assets.at("javascripts/main.js")" charset="UTF-8" type="text/javascript"></script>
             </div>
         </div>
     </div>

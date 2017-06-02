@@ -74,6 +74,80 @@
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Weather = function () {
+    function Weather() {
+        _classCallCheck(this, Weather);
+
+        this.city = "Tokyo";
+    }
+
+    _createClass(Weather, [{
+        key: "print",
+        value: function print(json) {
+            this.city = json.name;
+            $("#city-name").html("<img src='/assets/images/flag/" + json.sys.country.toLowerCase() + ".png'>" + this.city);
+            $("#weather").text(json.weather[0].main);
+            $("#icon").html("<img src='http://openweathermap.org/img/w/" + json.weather[0].icon + ".png'>");
+            var num = Number(json.main.temp - 273);
+            $("#temperature").text(num.toFixed(1) + "℃");
+            $("#wind").text(json.wind.speed + "m/s");
+            $("#cloud").text("空全体の" + json.clouds.all + "%が雲");
+            $("#pressure").text(json.main.pressure + "hPa");
+            $("#humidity").text(json.main.humidity + "%"); //湿度％
+            var sunrise = new Date(json.sys.sunrise * 1000);
+            $("#sunrise").text(sunrise);
+            var sunset = new Date(json.sys.sunset * 1000);
+            $("#sunset").text(sunset);
+
+            this.lat = json.coord.lat;
+            this.lon = json.coord.lon;
+            $("#latlon").text("lat:" + this.lat + ",lot:" + this.lon);
+        }
+    }, {
+        key: "send",
+        value: function send(cityName, map) {
+            var _this = this;
+
+            var url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9ab6492bf227782c3c7ae7417a624014";
+
+            $.ajax({
+                url: url
+            }).then(function (json) {
+                console.log(json);
+                _this.print(json);
+                map.changeCurrent(_this.lat, _this.lon);
+            }, function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: "floatFormat",
+        value: function floatFormat(number, n) {
+            var _pow = Math.pow(10, n);
+            return Math.round(number * _pow) / _pow;
+        }
+    }]);
+
+    return Weather;
+}();
+
+exports.default = Weather;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
        value: true
 });
 
@@ -82,6 +156,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _leaflet = __webpack_require__(3);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
+
+var _weather = __webpack_require__(0);
+
+var _weather2 = _interopRequireDefault(_weather);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -118,7 +196,7 @@ var Map = function () {
                      var pr = _leaflet2.default.tileLayer('http://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=9ab6492bf227782c3c7ae7417a624014');
 
                      this.map = _leaflet2.default.map("map", {
-                            center: [37.09, 138.52],
+                            center: [35.69, 139.69],
                             zoom: 16,
                             layers: [std]
                      });
@@ -132,12 +210,16 @@ var Map = function () {
                             "Mapboc(pressure)": pr
                      };
 
-                     _leaflet2.default.control.layers(baseMaps).addTo(this.map);
-                     _leaflet2.default.control.layers(overMaps).addTo(this.map);
+                     _leaflet2.default.control.layers(baseMaps, overMaps).addTo(this.map);
 
                      this.map.on("resize", function () {
                             _this.map.invalidateSize();
                      });
+              }
+       }, {
+              key: "changeCurrent",
+              value: function changeCurrent(lat, lon) {
+                     this.map.setView(new _leaflet2.default.LatLng(lat, lon), 16);
               }
        }]);
 
@@ -147,70 +229,17 @@ var Map = function () {
 exports.default = Map;
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Weather = function () {
-    function Weather() {
-        _classCallCheck(this, Weather);
-
-        this.city = "Tokyo";
-    }
-
-    _createClass(Weather, [{
-        key: "print",
-        value: function print(json) {
-            this.city = json.name;
-            $("#city-name").text(this.city);
-            $("#weather").text(json.weather[0].main);
-            $("#icon").html("<img src='http://openweathermap.org/img/w/" + json.weather[0].icon + ".png'>");
-        }
-    }, {
-        key: "send",
-        value: function send(cityName) {
-            var _this = this;
-
-            var url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9ab6492bf227782c3c7ae7417a624014";
-
-            $.ajax({
-                url: url
-            }).then(function (json) {
-                console.log(json);
-                _this.print(json);
-            }, function (err) {
-                console.log(err);
-            });
-        }
-    }]);
-
-    return Weather;
-}();
-
-exports.default = Weather;
-
-/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _weather = __webpack_require__(1);
+var _weather = __webpack_require__(0);
 
 var _weather2 = _interopRequireDefault(_weather);
 
-var _map = __webpack_require__(0);
+var _map = __webpack_require__(1);
 
 var _map2 = _interopRequireDefault(_map);
 
@@ -220,15 +249,18 @@ $(function () {
     var weather = new _weather2.default();
     var map = new _map2.default();
 
-    $("#search-city").click(function () {
-        var newCity = $("#input-city").val();
-        weather.send(newCity);
-    });
-    $(window).keydown(function () {
-        var newCity = $("#input-city").val();
-        weather.send(newCity);
+    $("#search-city").click(updateWeather);
+    $("#input-city").keydown(function (e) {
+        if (e.keyCode == 13) {
+            updateWeather();
+        }
     });
     weather.send(weather.city);
+
+    function updateWeather() {
+        var newCity = $("#input-city").val();
+        weather.send(newCity, map);
+    }
 });
 
 /***/ }),

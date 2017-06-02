@@ -1,7 +1,9 @@
 import L from "leaflet";
+import Weather from "./weather";
 
 export default class Map{
     constructor(){
+
         this.map = {};
         this.init();
     }
@@ -24,7 +26,7 @@ export default class Map{
        let pr = L.tileLayer('http://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=9ab6492bf227782c3c7ae7417a624014')
 
        this.map = L.map("map",{
-           center:[37.09,138.52],
+           center:[35.69,139.69],
            zoom:16,
            layers:[std]
        });
@@ -43,7 +45,10 @@ export default class Map{
        this.map.on("resize",()=>{
            this.map.invalidateSize();
        });
+    }
 
+    changeCurrent (lat,lon){
+        this.map.setView(new L.LatLng(lat,lon), 16 );
     }
 
 }
