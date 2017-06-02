@@ -34,13 +34,13 @@
         @if(flash.containsKey("success")){
         <div class="uk-alert-primary" uk-alert>
             <a class="uk-alert-close" uk-close></a>
-            <p class="successMessage">@flash.get("success")</p>
+            <p>@flash.get("success")</p>
         </div>
         }
         @if(flash.containsKey("errer")){
         <div class="uk-alert-warning" uk-alert>
             <a class="uk-alert-close" uk-close></a>
-            <p class="errerMessage">@flash.get("errer")</p>
+            <p>@flash.get("errer")</p>
         </div>
         }
         
