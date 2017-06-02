@@ -23,6 +23,12 @@
     <body>
         <header id="header">
             <h1 class="uk-container uk-container-center uk-hidden-small">Earth</h1>
+            @if(flash.containsKey("success")){
+                <p>@flash.get("success")</p>
+            }
+            @if(flash.containsKey("errer")){
+                <p>@flash.get("errer")</p>
+            }
         </header>
         @content
     </body>
