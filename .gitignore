@@ -15,3 +15,4 @@ dist
 /.settings
 /.nb-play.properties
 /.target/
+/node_modules/*
