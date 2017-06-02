@@ -3,11 +3,14 @@ html{
 }
 #header {
     background-color: #ffa500;
+    margin: 0;
 }
 #header h1{
     color: #0059ff;
+    margin: 0;
 }
 #side,#main {
+    margin-top: 20px;
     background-color: #fff;
     border-radius: 3px;
     box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
@@ -35,4 +38,13 @@ html{
 .uk-button-primary:focus{
     background-color: #ffa500;
     color: #0059ff;
+}
+*+.uk-alert{
+    margin-top: 0px;
+}
+.uk-alert-warning{
+    color: red;
+}
+.uk-alert-primary{
+    background-color: #c8fac8;
 }
